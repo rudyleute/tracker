@@ -7,29 +7,46 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Input from './simple/Input.jsx';
 import Categories from './Categories.jsx';
+import {useTimeBar} from '../context/TimeBarProvider.jsx'
+import Timer from './Timer.jsx';
 
-const TimeEntry = () => {
-  const [name, setName] = useState('');
+const TimeEntry = ({id, data, onStop, onDelete}) => {
+  const {name, startTime} = data;
+  const [value, setValue] = useState(name);
+  const { timeEntries, setTimeEntries } = useTimeBar();
+
+  const start = new Date(startTime);
+  const now = new Date();
+  const initialDiffSeconds = Math.max(0, Math.floor((now - start) / 1000));
+
+  const handleBlur = () => {
+    //save the data to the database
+    //receive the saved element
+    //propagate the saved element to the onBlur function
+    setTimeEntries(prevEntries => ({
+      ...prevEntries,
+      [id]: {
+        ...prevEntries[id],
+        name: value
+      }
+    }));
+  }
 
   return (
-    <div className={"time-bar"}>
-      <div className={"time-bar-timer"}>
-        <Button title={"Edit"}>
-          <span className={"timer-time"}>15:00:12</span>
-        </Button>
-      </div>
-      <div className={"time-bar-main"}>
+    <div className={"time-entry"}>
+      <Timer curTime={initialDiffSeconds}/>
+      <div className={"time-entry-main"}>
         <div className={"main-data"}>
-          <Input type={"text"} name={"name"} className={"time-name"} onChange={(e) => setName(e.target.value)}
-                 value={name} variant="filled"/>
+          <Input type={"text"} name={"name"} className={"time-name"} onBlur={handleBlur} onChange={(e) => setValue(e.target.value)}
+                 value={value} variant="filled"/>
         </div>
-        <Categories />
+        <Categories timeEntryId={id}/>
       </div>
-      <div className={"time-bar-actions"}>
-        <Button title={"Stop the timer"} className={"btn-icon btn-circle btn-stop"}>
+      <div className={"time-entry-actions"}>
+        <Button title={"Stop the timer"} onClick={() => onStop(id)} className={"btn-icon btn-circle btn-stop"}>
           <FontAwesomeIcon icon={faCircleStop}/>
         </Button>
-        <Button title={"Delete the timer"} className={"btn-icon btn-circle btn-del"}>
+        <Button title={"Delete the timer"} onClick={() => onDelete(id)} className={"btn-icon btn-circle btn-del"}>
           <FontAwesomeIcon icon={faCircleMinus}/>
         </Button>
       </div>

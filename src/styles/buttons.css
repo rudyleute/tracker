@@ -1,0 +1,75 @@
+.btn {
+    border: none;
+    background-color: inherit;
+    font: inherit;
+
+    width: fit-content;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn-circle {
+    border-radius: 50%;
+}
+
+.btn-icon {
+    color: #3246a8;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: inherit;
+    font-weight: bold;
+}
+
+.btn-stop {
+    color: #af2222;
+}
+
+.btn-del {
+    color: #d72638;
+}
+
+.btn-edit {
+    color: #5a005a;
+}
+
+.btn-te-add {
+    width: 100%;
+}
+
+.time-bar-control .btn {
+    height: 100%;
+
+    border-radius: 5px;
+    background-color: #FF6F61;
+}
+
+.time-bar-control .btn svg {
+    height: 100%;
+    aspect-ratio: 1/1;
+
+    color: #003366;
+}
+
+.btn-cat-add {
+    background-color: #FFCC00;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.btn-icon svg:hover, .btn-cat-add:hover, .time-bar-control .btn:hover {
+    filter: brightness(0.9);
+}
+
+.time-entry-actions .btn-icon {
+    height: 80%;
+    aspect-ratio: 1 / 1;
+}
+
+.time-entry-actions .btn-icon svg {
+    width: 100%;
+    height: 100%;
+}

@@ -1,13 +1,15 @@
-import TimeEntry from './components/TimeEntry.jsx';
 import "./styles/main.css";
+import "./styles/buttons.css"
+import TimeBar from './components/TimeBar.jsx';
+import { TimeBarProvider } from './context/TimeBarProvider.jsx';
 
 function App() {
 
   return (
     <>
-      <TimeEntry/>
-      <TimeEntry/>
-      <TimeEntry/>
+      <TimeBarProvider>
+        <TimeBar />
+      </TimeBarProvider>
     </>
   )
 }

@@ -3,13 +3,18 @@
     src: url("../fonts/Kranky-Regular.ttf");
 }
 
+@font-face {
+    font-family: "SyneMono";
+    src: url("../fonts/SyneMono-Regular.ttf");
+}
+
 body {
     font-family: "Kranky", sans-serif;
     background-color: #640D5F;
     margin: 0;
 }
 
-div.time-bar {
+div.time-entry {
     background-color: #B12C00;
 
     display: grid;
@@ -22,7 +27,7 @@ div.time-bar {
     margin-bottom: 5px;
 }
 
-.time-bar-main {
+.time-entry-main {
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -30,7 +35,7 @@ div.time-bar {
     min-width: 100%;
 }
 
-.time-bar-actions {
+.time-entry-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,7 +47,7 @@ div.time-bar {
     gap: 10px;
 }
 
-.time-bar-timer {
+.time-entry-timer {
     background-color: #FFCC00;
     display: flex;
     align-items: center;
@@ -56,11 +61,31 @@ div.time-bar {
 .timer-time {
     font-weight: bold;
     color: #640D5F;
+
+    font-family: SyneMono, monospace;
+}
+
+#time-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 0 5px 5px 5px;
+}
+
+.time-bar-control {
+    display: flex;
+    gap: 10px;
+    height: 30px;
+
+    border-radius: 5px;
 }
 
 .input {
     font-family: "Kranky", sans-serif;
     font-size: 1.5rem;
+    font-weight: bold;
+    color: #640D5F;
 
     background-color: #FFCC00;
     border-radius: 15px;
@@ -75,63 +100,6 @@ div.time-bar {
 
 .input:focus {
     outline: 3px solid #640D5F;
-}
-
-.btn {
-    border: none;
-    background-color: inherit;
-    font: inherit;
-
-    width: fit-content;
-}
-
-.btn:hover {
-    cursor: pointer;
-}
-
-.btn-circle {
-    border-radius: 50%;
-}
-
-.btn-icon {
-    color: #3246a8;
-
-    margin: 0;
-    padding: 0;
-
-    background-color: inherit;
-    font-weight: bold;
-}
-
-.btn-stop {
-    color: #af2222;
-}
-
-.btn-del {
-    color: #d72638;
-}
-
-.btn-edit {
-    color: #5a005a;
-}
-
-.btn-cat-add {
-    background-color: #FFCC00;
-    aspect-ratio: 1/1;
-}
-
-.btn-icon svg:hover, .btn-cat-add:hover {
-    filter: brightness(0.9);
-}
-
-.time-bar-actions .btn-icon {
-    height: 80%;
-    aspect-ratio: 1 / 1;
-}
-
-.time-bar-actions .btn-icon svg {
-    width: 100%;
-    height: 100%;
 }
 
 /* Category */
@@ -153,6 +121,11 @@ div.time-bar {
     white-space: nowrap;
 
     scroll-behavior: smooth;
+}
+
+.timer-time-part {
+    display: inline-block;
+    width: 50px;
 }
 
 .categories-list::-webkit-scrollbar {
