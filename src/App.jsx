@@ -10,9 +10,8 @@ function App() {
     <>
       <TimeBarProvider>
         <TimeBar />
+        <Modal />
       </TimeBarProvider>
-
-      <Modal />
     </>
   )
 }

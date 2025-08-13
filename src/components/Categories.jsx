@@ -30,22 +30,17 @@ const Categories = ({ timeEntryId }) => {
       </Button>
       <div ref={scrollableRef} className={"categories-list"}>
         {
-          timeEntries[timeEntryId]["categories"].map((oneCategory) =>
+          timeEntries.find(el => el["id"] === timeEntryId)["categories"].map((oneCategory) =>
             <Category key={oneCategory.id} data={oneCategory} button={{
               icon: faXmark,
               title: "Remove",
               onClick: () => {
-                console.log('clicked');
-                setTimeEntries(prev => {
-                  const categories = prev[timeEntryId]["categories"].filter((c) => c.id !== oneCategory.id);
-                  return {
-                    ...prev,
-                    [timeEntryId]: {
-                      ...prev[timeEntryId],
-                      "categories": categories
-                    }
-                  }
-                });
+                setTimeEntries(prev => prev.map(el => {
+                  if (el.id !== timeEntryId) return el
+
+                  const {categories, ...rest} = el;
+                  return {...rest, categories: categories.filter(category => category.id !== oneCategory.id)}
+                }));
               }
             }}/>)
         }

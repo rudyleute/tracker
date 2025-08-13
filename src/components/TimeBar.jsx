@@ -88,39 +88,47 @@ const TimeBar = () => {
   const {timeEntries, setTimeEntries} = useTimeBar();
 
   useEffect(() => {
-    setTimeEntries({
-      [uuidv4()]: {
+    setTimeEntries([
+      {
         name: "Walking",
         categories: cat,
-        startTime: '2025-08-12 06:30:02'
+        startTime: '2025-08-12 06:30:02',
+        endTime: null,
+        id: uuidv4()
       },
-      [uuidv4()]: {
+      {
         name: "Running",
         categories: cat,
-        startTime: '2025-08-12 03:32:17'
+        startTime: '2025-08-12 03:32:17',
+        endTime: null,
+        id: uuidv4()
       },
-      [uuidv4()]: {
+      {
         name: "Whatever",
         categories: cat,
-        startTime: '2025-08-11 02:11:56'
+        startTime: '2025-08-11 02:11:56',
+        endTime: null,
+        id: uuidv4()
       }
-    });
+    ]);
   }, [])
 
   const addNewTracker = () => {
-    if (Object.keys(timeEntries).length === 4) {
+    if (timeEntries.length === 4) {
       alert("It is not possible to track more than 4 time entries at once");
       return;
     }
     setTimeEntries(prev => (
-      {
+      [
         ...prev,
-        [uuidv4()]: {
+        {
           name: "",
           categories: [],
-          startTime: (new Date()).toLocaleString()
+          startTime: (new Date()).toISOString(),
+          id: uuidv4(),
+          endTime: null
         }
-      }
+      ]
     ))
   }
 
@@ -131,9 +139,7 @@ const TimeBar = () => {
 
   const onDelete = (id) => {
     setTimeEntries(prevEntries => {
-      const {[id]: _, ...rest} = prevEntries;
-
-      return rest;
+      return prevEntries.filter((c) => c.id !== id);
     })
   }
 
@@ -148,8 +154,8 @@ const TimeBar = () => {
         </Button>
       </div>
       <div className={"time-entries"}>
-        { Object.keys(timeEntries).map((key) => {
-          return <TimeEntry onStop={onStop} onDelete={onDelete} data={timeEntries[key]} key={key} id={key}/>
+        { timeEntries.map(elem => {
+          return <TimeEntry onStop={onStop} onDelete={onDelete} data={elem} key={elem["id"]} id={elem["id"]}/>
         }) }
       </div>
     </div>
