@@ -1,7 +1,7 @@
 import Button from './simple/Button.jsx';
 import { useEffect, useState } from 'react';
 
-const Timer = ({curTime}) => {
+const Timer = ({curTime, onClick}) => {
   const [timer, setTimer] = useState(curTime);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Timer = ({curTime}) => {
 
   return (
     <div className={"time-entry-timer"}>
-      <Button title={"Edit"}>
+      <Button onClick={onClick} title={"Edit"}>
         <span className={"timer-time"}>
           {String(h).padStart(2, '0')}:{String(min).padStart(2, '0')}:{String(sec).padStart(2, '0')}
         </span>

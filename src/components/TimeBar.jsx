@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useTimeBar } from '../context/TimeBarProvider.jsx';
 import Button from './simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleChevronUp, faCirclePlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleChevronUp, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
 
 const cat = [
   {

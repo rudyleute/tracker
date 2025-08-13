@@ -8,12 +8,14 @@ import {
 import Input from './simple/Input.jsx';
 import Categories from './Categories.jsx';
 import {useTimeBar} from '../context/TimeBarProvider.jsx'
+import {useModal} from '../context/ModalProvider.jsx'
 import Timer from './Timer.jsx';
 
 const TimeEntry = ({id, data, onStop, onDelete}) => {
   const {name, startTime} = data;
   const [value, setValue] = useState(name);
   const { timeEntries, setTimeEntries } = useTimeBar();
+  const { showModal, hideModal } = useModal();
 
   const start = new Date(startTime);
   const now = new Date();
@@ -32,9 +34,16 @@ const TimeEntry = ({id, data, onStop, onDelete}) => {
     }));
   }
 
+  const onTimerClick = () => {
+    showModal(<div>content</div>, "Edit", () => {
+      alert("Save");
+      hideModal();
+    })
+  }
+
   return (
     <div className={"time-entry"}>
-      <Timer curTime={initialDiffSeconds}/>
+      <Timer onClick={onTimerClick} curTime={initialDiffSeconds}/>
       <div className={"time-entry-main"}>
         <div className={"main-data"}>
           <Input type={"text"} name={"name"} className={"time-name"} onBlur={handleBlur} onChange={(e) => setValue(e.target.value)}
