@@ -60,6 +60,10 @@
     aspect-ratio: 1/1;
 }
 
+.btn-lst {
+    color: #003366;
+}
+
 .btn-icon svg:hover, .btn-cat-add:hover, .time-bar-control .btn:hover, .modal-actions .btn:hover {
     filter: brightness(0.9);
 }

@@ -33,6 +33,17 @@
     flex-grow: 1;
 
     padding: 20px;
+    overflow-y: scroll;
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: #640D5F;
+    border-radius: 2px;
 }
 
 .modal-header {

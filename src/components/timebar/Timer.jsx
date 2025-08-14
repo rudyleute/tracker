@@ -1,8 +1,12 @@
-import Button from './simple/Button.jsx';
+import Button from '../simple/Button.jsx';
 import { useEffect, useState } from 'react';
 
 const Timer = ({curTime, onClick}) => {
-  const [timer, setTimer] = useState(curTime);
+  const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    setTimer(curTime);
+  }, [curTime])
 
   useEffect(() => {
     const interval = setInterval(() => {

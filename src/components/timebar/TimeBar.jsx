@@ -1,8 +1,8 @@
 import TimeEntry from './TimeEntry.jsx';
 import {v4 as uuidv4} from 'uuid';
 import { useEffect } from 'react';
-import { useTimeBar } from '../context/TimeBarProvider.jsx';
-import Button from './simple/Button.jsx';
+import { useTimeBar } from '../../context/TimeBarProvider.jsx';
+import Button from '../simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronUp, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -124,7 +124,7 @@ const TimeBar = () => {
         {
           name: "",
           categories: [],
-          startTime: (new Date()).toISOString(),
+          startTime: new Date(),
           id: uuidv4(),
           endTime: null
         }

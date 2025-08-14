@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Button from './simple/Button.jsx'
+import Button from '../simple/Button.jsx'
 
 const Category = ({data, button}) => {
   const {name, colour} = data;

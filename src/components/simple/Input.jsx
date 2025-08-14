@@ -1,11 +1,11 @@
 import classnames from "classnames";
 
-const Input = ({ type, className, value, name, id, onChange, label }) => {
+const Input = ({ name, label, className, ...rest }) => {
   return (
-    <>
-      {label && <label htmlFor={name}>{label}</label>}
-      <input type={type} name={name} className={classnames('input', className)} id={id} value={value} onChange={onChange}/>
-    </>
+    <span>
+      {label && <label className={"label"} htmlFor={name}>{label}</label>}
+      <input className={classnames('input', className)} {...rest} />
+    </span>
   )
 }
 

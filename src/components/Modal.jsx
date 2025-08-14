@@ -16,10 +16,7 @@ const Modal = () => {
               {title}
             </div>
             <div className={"modal-actions"}>
-              <Button className={"btn-circle"} onClick={saveFunc}>
-                <FontAwesomeIcon size={"2xl"} icon={faSave} />
-              </Button>
-              <Button className={"btn-circle"} onClick={hideModal}>
+              <Button title={"Close"} className={"btn-circle"} onClick={hideModal}>
                 <FontAwesomeIcon size={"2xl"} icon={faCircleXmark} />
               </Button>
             </div>

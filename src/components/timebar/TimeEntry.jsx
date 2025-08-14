@@ -1,27 +1,37 @@
-import Button from './simple/Button.jsx';
-import { useState } from 'react';
+import Button from '../simple/Button.jsx';
+import { useEffect, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleMinus,
-  faCircleStop,
+  faCircleStop
 } from '@fortawesome/free-solid-svg-icons';
-import Input from './simple/Input.jsx';
+import Input from '../simple/Input.jsx';
 import Categories from './Categories.jsx';
-import {useTimeBar} from '../context/TimeBarProvider.jsx'
-import {useModal} from '../context/ModalProvider.jsx'
+import { useTimeBar } from '../../context/TimeBarProvider.jsx'
+import { useModal } from '../../context/ModalProvider.jsx'
 import Timer from './Timer.jsx';
 import EntryEdit from './EntryEdit.jsx';
 
-const TimeEntry = ({id: entryId, data, onStop, onDelete}) => {
-  const {name, startTime} = data;
-  const [value, setValue] = useState(name);
+const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
   const { timeEntries, setTimeEntries } = useTimeBar();
+  const [values, setValues] = useState({
+    name: "",
+    diffSec: null
+  });
   const { showModal, hideModal } = useModal();
 
-  const start = new Date(startTime);
-  const now = new Date();
-  const initialDiffSeconds = Math.max(0, Math.floor((now - start) / 1000));
-  console.log(initialDiffSeconds, start, startTime)
+  useEffect(() => {
+    const { name, startTime } = timeEntries.find(el => el.id === entryId);
+
+    const start = new Date(startTime);
+    const now = new Date();
+    const initialDiffSeconds = Math.max(0, Math.floor((now - start) / 1000));
+
+    setValues({
+      name,
+      diffSec: initialDiffSeconds
+    })
+  }, [timeEntries])
 
   const handleBlur = () => {
     //save the data to the database
@@ -30,12 +40,12 @@ const TimeEntry = ({id: entryId, data, onStop, onDelete}) => {
     setTimeEntries(prevEntries => prevEntries.map(elem => {
       if (elem.id !== entryId) return elem
 
-      return {...elem, name: value}
+      return { ...elem, name: values.name }
     }));
   }
 
   const onTimerClick = () => {
-    showModal(<EntryEdit entryId={entryId} />, "Edit", () => {
+    showModal(<EntryEdit entryId={entryId}/>, "Edit", () => {
       alert("Save");
       hideModal();
     })
@@ -43,11 +53,17 @@ const TimeEntry = ({id: entryId, data, onStop, onDelete}) => {
 
   return (
     <div className={"time-entry"}>
-      <Timer onClick={onTimerClick} curTime={initialDiffSeconds}/>
+      <Timer onClick={onTimerClick} curTime={values.diffSec}/>
       <div className={"time-entry-main"}>
         <div className={"main-data"}>
-          <Input type={"text"} name={"name"} className={"time-name"} onBlur={handleBlur} onChange={(e) => setValue(e.target.value)}
-                 value={value} variant="filled"/>
+          <Input type={"text"} name={"name"} className={"time-name"} onBlur={handleBlur}
+                 onChange={(e) => setValues(prev => {
+                   return {
+                     ...prev,
+                     "name": e.target.value
+                   }
+                 })}
+                 value={values.name} variant="filled"/>
         </div>
         <Categories timeEntryId={entryId}/>
       </div>
