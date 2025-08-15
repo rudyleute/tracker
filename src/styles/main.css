@@ -195,3 +195,18 @@ input:disabled {
     transform: translateY(7%);
 }
 
+/* Pop up */
+.pop-up {
+    background-color: #640D5F;
+    padding: 10px;
+    margin-top: 3px;
+
+    border-radius: 10px;
+    color: white;
+
+    width: fit-content;
+    height: fit-content;
+
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}

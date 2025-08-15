@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef} from 'react';
 import Category from './Category.jsx';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
-import Button from '../simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTimeBar } from '../../context/TimeBarProvider.jsx';
 import classnames from 'classnames';
+import ButtonPopUp from '../simple/ButtonPopUp.jsx';
 
 const Categories = ({ timeEntryId, className }) => {
   const { timeEntries, setTimeEntries } = useTimeBar();
@@ -26,9 +26,9 @@ const Categories = ({ timeEntryId, className }) => {
 
   return (
     <div className={"categories"}>
-      <Button title={"Add a category"} className={"btn-icon btn-circle btn-cat-add"}>
-        <FontAwesomeIcon icon={faPlus}/>
-      </Button>
+      <ButtonPopUp buttonContent={<FontAwesomeIcon icon={faPlus}/>}>
+        Pooooooop up
+      </ButtonPopUp>
       <div ref={scrollableRef} className={classnames("categories-list", className)}>
         {
           timeEntries.find(el => el["id"] === timeEntryId)["categories"].map((oneCategory) =>
