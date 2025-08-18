@@ -6,9 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackwardStep } from '@fortawesome/free-solid-svg-icons';
 import Categories from './Categories.jsx';
 import Datetime from '../simple/Datetime.jsx';
+import {useToasts} from '../../context/ToastProvider.jsx';
 
 const EntryEdit = ({ entryId }) => {
   const { timeEntries, setTimeEntries } = useTimeBar();
+  const { addMessage } = useToasts();
+
   const [values, setValues] = useState({
     name: "",
     startTime: null,
@@ -52,7 +55,7 @@ const EntryEdit = ({ entryId }) => {
       } value={values.startTime ?? ""}
              onChange={(e) => {
                if (new Date() < new Date(e.target.value)) {
-                 alert("The start time of an entry can't be in the future");
+                 addMessage("The start time of an entry can't be in the future", "error");
                  return;
                }
 
@@ -71,7 +74,7 @@ const EntryEdit = ({ entryId }) => {
                readOnly: true, disabled: true,
                onChange: (e) => {
                  if (new Date(e.target.value) > new Date(values.startTime)) {
-                   alert("The end time of an entry can't be before its start time");
+                   addMessage("The end time of an entry can't be before its start time", "error");
                    return;
                  }
 

@@ -1,5 +1,5 @@
 import Button from '../simple/Button.jsx';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleMinus,

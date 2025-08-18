@@ -8,7 +8,7 @@ const defaultState = {
   saveFunc: null
 }
 
-const ModalContext = createContext(null);
+const ModalContext = createContext({});
 const ModalProvider = ({children}) => {
   const [data, setData] = useState(defaultState)
 

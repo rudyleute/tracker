@@ -5,6 +5,7 @@ import { useTimeBar } from '../../context/TimeBarProvider.jsx';
 import Button from '../simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronUp, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import { useToasts} from '../../context/ToastProvider.jsx';
 
 const cat = [
   {
@@ -86,6 +87,7 @@ const cat = [
 
 const TimeBar = () => {
   const {timeEntries, setTimeEntries} = useTimeBar();
+  const {addMessage} = useToasts();
 
   useEffect(() => {
     setTimeEntries([
@@ -115,7 +117,7 @@ const TimeBar = () => {
 
   const addNewTracker = () => {
     if (timeEntries.length === 4) {
-      alert("It is not possible to track more than 4 time entries at once");
+      addMessage("It is not possible to track more than 4 time entries at once", "error");
       return;
     }
     setTimeEntries(prev => (
