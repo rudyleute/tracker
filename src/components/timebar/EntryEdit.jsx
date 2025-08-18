@@ -10,7 +10,7 @@ import {useToasts} from '../../context/ToastProvider.jsx';
 
 const EntryEdit = ({ entryId }) => {
   const { timeEntries, setTimeEntries } = useTimeBar();
-  const { addMessage } = useToasts();
+  const { addError } = useToasts();
 
   const [values, setValues] = useState({
     name: "",
@@ -55,7 +55,7 @@ const EntryEdit = ({ entryId }) => {
       } value={values.startTime ?? ""}
              onChange={(e) => {
                if (new Date() < new Date(e.target.value)) {
-                 addMessage("The start time of an entry can't be in the future", "error");
+                 addError("The start time of an entry can't be in the future");
                  return;
                }
 
@@ -74,7 +74,7 @@ const EntryEdit = ({ entryId }) => {
                readOnly: true, disabled: true,
                onChange: (e) => {
                  if (new Date(e.target.value) > new Date(values.startTime)) {
-                   addMessage("The end time of an entry can't be before its start time", "error");
+                   addError("The end time of an entry can't be before its start time");
                    return;
                  }
 

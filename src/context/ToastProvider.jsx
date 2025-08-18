@@ -5,6 +5,18 @@ const ToastContext = createContext({});
 const ToastProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
 
+  const addSuccess = useCallback((message) => {
+    addMessage(message, "success");
+  })
+
+  const addError = useCallback((message) => {
+    addMessage(message, "error");
+  })
+
+  const addWarning = useCallback((message) => {
+    addMessage(message, "warning");
+  })
+
   const addMessage = useCallback((message, type) => {
     const id = uuidv4();
 
@@ -19,7 +31,7 @@ const ToastProvider = ({ children }) => {
   }, [])
 
   return (
-    <ToastContext.Provider value={{messages, addMessage, removeMessage}}>
+    <ToastContext.Provider value={{messages, addSuccess, addError, addWarning, removeMessage}}>
       {children}
     </ToastContext.Provider>
   )

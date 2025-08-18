@@ -87,7 +87,7 @@ const cat = [
 
 const TimeBar = () => {
   const {timeEntries, setTimeEntries} = useTimeBar();
-  const {addMessage} = useToasts();
+  const {addError} = useToasts();
 
   useEffect(() => {
     setTimeEntries([
@@ -117,7 +117,7 @@ const TimeBar = () => {
 
   const addNewTracker = () => {
     if (timeEntries.length === 4) {
-      addMessage("It is not possible to track more than 4 time entries at once", "error");
+      addError("It is not possible to track more than 4 time entries at once");
       return;
     }
     setTimeEntries(prev => (
