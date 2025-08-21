@@ -1,11 +1,12 @@
 import TimeEntry from './TimeEntry.jsx';
 import {v4 as uuidv4} from 'uuid';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTimeBar } from '../../context/TimeBarProvider.jsx';
 import Button from '../simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleChevronUp, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import { faCircleChevronDown, faCircleChevronUp, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
 import { useToasts} from '../../context/ToastProvider.jsx';
+import classnames from 'classnames';
 
 const cat = [
   {
@@ -88,6 +89,7 @@ const cat = [
 const TimeBar = () => {
   const {timeEntries, setTimeEntries} = useTimeBar();
   const {addError} = useToasts();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
     setTimeEntries([
@@ -151,11 +153,11 @@ const TimeBar = () => {
         <Button title={"Add a new time tracker"} onClick={addNewTracker} className={"btn-circle btn-te-add"}>
           <FontAwesomeIcon icon={faCirclePlay} />
         </Button>
-        <Button title={"Collapse trackers"} className={"btn-circle btn-tes"}>
-          <FontAwesomeIcon icon={faCircleChevronUp} />
+        <Button onClick={() => setIsCollapsed(prev => !prev)} title={"Collapse trackers"} className={"btn-circle btn-tes"}>
+          <FontAwesomeIcon icon={isCollapsed ? faCircleChevronDown : faCircleChevronUp} />
         </Button>
       </div>
-      <div className={"time-entries"}>
+      <div className={classnames("time-entries", isCollapsed && "collapsed")}>
         { timeEntries.map(elem => {
           return <TimeEntry onStop={onStop} onDelete={onDelete} data={elem} key={elem["id"]} id={elem["id"]}/>
         }) }

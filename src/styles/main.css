@@ -21,6 +21,17 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+.time-entries {
+    overflow: hidden;
+    transition: max-height 0.5s ease-in, opacity 0.3s ease-in-out;
+    max-height: 1000px;
+}
+
+.time-entries.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
 div.time-entry {
     background-color: #B12C00;
 
@@ -63,6 +74,8 @@ div.time-entry {
     border-radius: 15px;
     box-shadow: 7px 7px #640D5F;
     font-size: 2.2rem;
+
+    min-width: 8ch;
 }
 
 .timer-time {
