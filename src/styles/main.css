@@ -198,10 +198,16 @@ input:disabled {
     color: #640D5F;
 }
 
+.category-transparent {
+    background-color: transparent;
+}
+
 .category .category-colour {
     height: 50%;
     aspect-ratio: 1/1;
     border-radius: 50%;
+
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
 }
 
 .category .btn {
@@ -222,4 +228,59 @@ input:disabled {
 
     font-weight: bold;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+
+    z-index: 2001;
+    box-sizing: border-box;
+}
+
+/* autocomplete */
+.autocomplete {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.autocomplete-options {
+    position: absolute;
+    left: 15px;
+    top: 100%;
+    width: calc(100% - 30px);
+
+    display: flex;
+    flex-direction: column;
+    background-color: #640D5F;
+
+    margin-top: 3px;
+    z-index: 2000;
+
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-sizing: border-box;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.autocomplete-option .category-name {
+    color: white;
+}
+
+.autocomplete-option {
+    display: flex;
+    justify-content: start;
+    padding: 5px;
+
+    gap: 10px;
+}
+
+.autocomplete-option:hover {
+    background-color: #3a0731;
+    cursor: pointer;
+}
+
+.autocomplete-option .categories-list {
+    overflow-x: clip;
+    flex-grow: 1;
 }

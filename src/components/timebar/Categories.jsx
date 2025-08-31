@@ -1,4 +1,4 @@
-import { useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import Category from './Category.jsx';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,28 +25,30 @@ const Categories = ({ timeEntryId, className }) => {
   }, []);
 
   return (
-    <div className={"categories"}>
-      <ButtonPopUp buttonContent={<FontAwesomeIcon icon={faPlus}/>}>
-        Pooooooop up
-      </ButtonPopUp>
-      <div ref={scrollableRef} className={classnames("categories-list", className)}>
-        {
-          timeEntries.find(el => el["id"] === timeEntryId)["categories"].map((oneCategory) =>
-            <Category key={oneCategory.id} data={oneCategory} button={{
-              icon: faXmark,
-              title: "Remove",
-              onClick: () => {
-                setTimeEntries(prev => prev.map(el => {
-                  if (el.id !== timeEntryId) return el
+    <>
+      <div className={"categories"}>
+        <ButtonPopUp buttonContent={<FontAwesomeIcon icon={faPlus}/>}>
+          Pooooooop up
+        </ButtonPopUp>
+        <div ref={scrollableRef} className={classnames("categories-list", className)}>
+          {
+            timeEntries.find(el => el["id"] === timeEntryId)["categories"]?.map((oneCategory) =>
+              <Category key={oneCategory.id} data={oneCategory} button={{
+                icon: faXmark,
+                title: "Remove",
+                onClick: () => {
+                  setTimeEntries(prev => prev.map(el => {
+                    if (el.id !== timeEntryId) return el
 
-                  const {categories, ...rest} = el;
-                  return {...rest, categories: categories.filter(category => category.id !== oneCategory.id)}
-                }));
-              }
-            }}/>)
-        }
+                    const { categories, ...rest } = el;
+                    return { ...rest, categories: categories.filter(category => category.id !== oneCategory.id) }
+                  }));
+                }
+              }}/>)
+          }
+        </div>
       </div>
-    </div>
+    </>
   )
 
 }

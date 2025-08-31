@@ -1,17 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from '../simple/Button.jsx'
+import classnames from 'classnames';
 
-const Category = ({data, button}) => {
-  const {name, colour} = data;
-  const {icon, title, onClick} = button;
+const Category = ({ className, data, button }) => {
+  const { name, colour } = data;
 
   return (
-    <div className="category">
-      <span className={"category-colour"} style={{backgroundColor: colour}}/>
+    <div className={classnames("category", className)}>
+      <span className={"category-colour"} style={{ backgroundColor: colour }}/>
       <span className={"category-name"}>{name}</span>
-      <Button title={title} onClick={onClick} className={"btn-icon"}>
-        <FontAwesomeIcon icon={icon} />
-      </Button>
+      {
+        button && <Button title={button.title} onClick={button.onClick} className={"btn-icon"}>
+          <FontAwesomeIcon icon={button.icon}/>
+        </Button>
+      }
     </div>
   )
 }
