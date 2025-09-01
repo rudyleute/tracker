@@ -150,8 +150,8 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
       <div onPointerDown={(e) => {
         e.preventDefault();
         handleOptionSelect(elem, hideOptions);
-      }} key={index} className={"search-option"}>
-        <span className={"search-option-name"}>{elem.name}</span>
+      }} key={index} className={"autocomplete-option"}>
+        <span className={"autocomplete-option-name"}>{elem.name}</span>
         <div className={"categories-list"}>{
           elem.categories.map(({id, ...rest}) => <Category className={"category-transparent"} data={rest} key={id} />)
         }</div>

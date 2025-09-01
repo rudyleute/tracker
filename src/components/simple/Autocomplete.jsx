@@ -43,7 +43,7 @@ const Autocomplete = ({ fetchOptions, renderOptions, value, onBlur = () => {}, o
   // #TODO start using the element in the TimeBar
   // #TODO search options must appear only when onFocus event on the input is triggered
   return (
-    <div className={"search"}>
+    <div className={"autocomplete"}>
       <Input ref={inputRef} onFocus={(e) => {
         setIsShown(true);
         onFocus(e);
@@ -54,7 +54,7 @@ const Autocomplete = ({ fetchOptions, renderOptions, value, onBlur = () => {}, o
         setIsShown(true)
         onChange(e);
       }} {...rest} value={value}/>
-      {isShown && <div className={"search-options"}>
+      {isShown && <div className={"autocomplete-options"}>
         {isLoading ? <PacmanLoader/> : renderOptions(options, { hideOptions: () => setIsShown(false) })}
       </div>}
     </div>
