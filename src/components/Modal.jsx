@@ -1,34 +1,30 @@
-import { useModal } from '../context/ModalProvider.jsx';
 import Button from './simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSave } from '@fortawesome/free-solid-svg-icons';
+import { createPortal } from 'react-dom';
 
-const Modal = () => {
-  const { hideModal, data } = useModal();
+const Modal = ({ onClose, data, zIndex }) => {
   const { isShown, title, content, saveFunc } = data;
+  if (!isShown) return null;
 
-  return (
-    <>
-      {isShown && <>
-        <div className={"modal"}>
-          <div className={"modal-header"}>
-            <div className={"modal-title"}>
-              {title}
-            </div>
-            <div className={"modal-actions"}>
-              <Button title={"Close"} className={"btn-circle"} onClick={hideModal}>
-                <FontAwesomeIcon size={"2xl"} icon={faCircleXmark} />
-              </Button>
-            </div>
+  return createPortal(<>
+      <div className={"modal"} style={{zIndex: zIndex}}>
+        <div className={"modal-header"}>
+          <div className={"modal-title"}>
+            {title}
           </div>
-          <div className={"modal-content"}>
-            {content}
+          <div className={"modal-actions"}>
+            <Button title={"Close"} className={"btn-circle"} onClick={onClose}>
+              <FontAwesomeIcon size={"2xl"} icon={faCircleXmark}/>
+            </Button>
           </div>
         </div>
-
-        <div onClick={hideModal} className={"modal-overlay"}/>
-      </>}
-    </>
+        <div className={"modal-content"}>
+          {content}
+        </div>
+      </div>
+    </>,
+    document.body
   )
 }
 

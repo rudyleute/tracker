@@ -6,13 +6,13 @@ import {
   faCircleStop
 } from '@fortawesome/free-solid-svg-icons';
 import Categories from './Categories.jsx';
-import { useTimeBar } from '../../context/TimeBarProvider.jsx'
 import { useModal } from '../../context/ModalProvider.jsx'
 import Timer from './Timer.jsx';
 import EntryEdit from './EntryEdit.jsx';
 import Autocomplete from '../simple/Autocomplete.jsx';
 import Category from './Category.jsx';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import {useTimeBar} from '../../context/TimeBarProvider.jsx';
 
 const entries = [
   {
@@ -86,8 +86,8 @@ const entries = [
   }
 ]
 
-const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
-  const { timeEntries, setTimeEntries } = useTimeBar();
+const TimeEntry = ({ data, onStop, onDelete }) => {
+  const {setTimeEntries} = useTimeBar();
   const [values, setValues] = useState({
     name: "",
     diffSec: null
@@ -95,7 +95,7 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
   const { showModal, hideModal } = useModal();
 
   useEffect(() => {
-    const { name, startTime } = timeEntries.find(el => el.id === entryId);
+    const { name, startTime } = data;
 
     const start = new Date(startTime);
     const now = new Date();
@@ -107,21 +107,21 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
       name,
       diffSec: initialDiffSeconds
     })
-  }, [timeEntries])
+  }, [data])
 
   const handleBlur = () => {
     //save the data to the database
     //receive the saved element
     //propagate the saved element to the onBlur function
     setTimeEntries(prevEntries => prevEntries.map(elem => {
-      if (elem.id !== entryId) return elem
+      if (elem.id !== data.id) return elem
 
       return { ...elem, name: values.name }
     }));
   }
 
   const onTimerClick = () => {
-    showModal(<EntryEdit entryId={entryId}/>, "Edit", () => {
+    showModal(<EntryEdit entryId={data.id}/>, "Edit", () => {
       alert("Save");
       hideModal();
     })
@@ -137,7 +137,7 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
     setValues(prev => ({ ...prev, name: entry.name }));
 
     setTimeEntries(prevEntries => prevEntries.map(elem => {
-      if (elem.id !== entryId) return elem
+      if (elem.id !== data.id) return elem
 
       return { ...elem, name: entry.name, categories: entry.categories }
     }));
@@ -145,7 +145,7 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
     if (typeof hideOptions === "function") hideOptions();
   }
 
-  const renderOptions = (values, {hideOptions}) => values.map((elem, index) => {
+  const renderOptions = (values, { hideOptions }) => values.map((elem, index) => {
     return (
       <div onPointerDown={(e) => {
         e.preventDefault();
@@ -153,7 +153,7 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
       }} key={index} className={"autocomplete-option"}>
         <span className={"autocomplete-option-name"}>{elem.name}</span>
         <div className={"categories-list"}>{
-          elem.categories.map(({id, ...rest}) => <Category className={"category-transparent"} data={rest} key={id} />)
+          elem.categories.map(({ id, ...rest }) => <Category className={"category-transparent"} data={rest} key={id}/>)
         }</div>
       </div>
     )
@@ -168,20 +168,21 @@ const TimeEntry = ({ id: entryId, onStop, onDelete }) => {
                         fetchOptions={fetchOptions}
                         renderOptions={renderOptions}
                         onChange={(e) => setValues(prev => {
-                   return {
-                     ...prev,
-                     "name": e.target.value
-                   }
-                 })}
-                        value={values.name} />
+                          return {
+                            ...prev,
+                            "name": e.target.value
+                          }
+                        })}
+                        value={values.name}
+          />
         </div>
-        <Categories timeEntryId={entryId}/>
+        <Categories data={data.categories} entryId={data.id} />
       </div>
       <div className={"time-entry-actions"}>
-        <Button title={"Stop the timer"} onClick={() => onStop(entryId)} className={"btn-icon btn-circle btn-stop"}>
+        <Button title={"Stop the timer"} onClick={() => onStop(data.id)} className={"btn-icon btn-circle btn-stop"}>
           <FontAwesomeIcon icon={faCircleStop}/>
         </Button>
-        <Button title={"Delete the timer"} onClick={() => onDelete(entryId)} className={"btn-icon btn-circle btn-del"}>
+        <Button title={"Delete the timer"} onClick={() => onDelete(data.id)} className={"btn-icon btn-circle btn-del"}>
           <FontAwesomeIcon icon={faCircleMinus}/>
         </Button>
       </div>

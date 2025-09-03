@@ -1,33 +1,30 @@
 import { createContext, useContext, useState } from 'react';
-
-
-const defaultState = {
-  content: null,
-  title: "dadadaasdasd",
-  isShown: false,
-  saveFunc: null
-}
+import Modal from '../components/Modal.jsx';
 
 const ModalContext = createContext({});
-const ModalProvider = ({children}) => {
-  const [data, setData] = useState(defaultState)
+const ModalProvider = ({ children }) => {
+  const [stack, setStack] = useState([]);
 
-  const showModal = (content, title, saveFunc) => {
-    setData({
+  const showModal = (content, title, saveFunc = null) => {
+    setStack(prev => [...prev, {
       isShown: true,
       content,
       title,
-      saveFunc,
-    });
+      saveFunc
+    }]);
   }
 
-  const hideModal = () => {
-    setData(defaultState)
-  }
+  const hideModal = () => setStack(prev => prev.slice(0, -1))
 
   return (
-    <ModalContext.Provider value={{data, showModal, hideModal}}>
+    <ModalContext.Provider value={{ showModal, hideModal }}>
       {children}
+      {
+        stack.map((data, i) => (
+          <Modal key={i} data={data} onClose={hideModal} zIndex={2000 + i}/>
+        ))
+      }
+      {stack.length > 0 && <div {...(stack.length === 1 ? {onClick: hideModal} : {})} className={"modal-overlay"}/>}
     </ModalContext.Provider>
   );
 }

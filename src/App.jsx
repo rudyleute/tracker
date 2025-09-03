@@ -4,17 +4,12 @@ import "./styles/modal.css"
 import "./styles/toasts.css"
 import TimeBar from './components/timebar/TimeBar.jsx';
 import { TimeBarProvider } from './context/TimeBarProvider.jsx';
-import Modal from './components/Modal.jsx';
 import Toasts from './components/Toasts.jsx';
 
 function App() {
   return (
     <>
-      <TimeBarProvider>
-        <TimeBar />
-        <Modal />
-        <Toasts />
-      </TimeBarProvider>
+      <TimeBar/>
     </>
   )
 }
