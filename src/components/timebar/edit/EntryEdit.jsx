@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import Input from '../simple/Input.jsx';
-import Button from '../simple/Button.jsx';
+import Input from '../../simple/Input.jsx';
+import Button from '../../simple/Button.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackwardStep } from '@fortawesome/free-solid-svg-icons';
-import Categories from './Categories.jsx';
-import Datetime from '../simple/Datetime.jsx';
-import { useToasts } from '../../context/ToastProvider.jsx';
-import { useTimeBar } from '../../context/TimeBarProvider.jsx';
+import Categories from '../Categories.jsx';
+import Datetime from '../../simple/Datetime.jsx';
+import { useToasts } from '../../../context/ToastProvider.jsx';
+import { useTimeBar } from '../../../context/TimeBarProvider.jsx';
 
 const EntryEdit = ({ entryId }) => {
   const { timeEntries, setTimeEntries } = useTimeBar();
@@ -34,7 +34,7 @@ const EntryEdit = ({ entryId }) => {
   }
 
   return (
-    <div className={"entry-edit"}>
+    <div className={"modal-edit"}>
       <Input type={"text"} name={"name"} label={"name"} value={values.name}
              onChange={(e) => setValues(prev => {
                return {
@@ -88,7 +88,6 @@ const EntryEdit = ({ entryId }) => {
       />
 
       <Categories className={"categories-edit"} data={values.categories} entryId={entryId}/>
-
     </div>
   )
 }

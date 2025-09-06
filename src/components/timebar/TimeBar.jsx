@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronDown, faCircleChevronUp, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
 import { useToasts } from '../../context/ToastProvider.jsx';
 import { useSelector } from 'react-redux';
+import { selectAttachable } from '../../reducers/categoriesReducer.jsx';
 import classnames from 'classnames';
 
 const TimeBar = () => {
@@ -14,7 +15,7 @@ const TimeBar = () => {
   const { addError } = useToasts();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const cat = useSelector(state => state.categories);
+  const cat = useSelector(selectAttachable);
 
   useEffect(() => {
     setTimeEntries([

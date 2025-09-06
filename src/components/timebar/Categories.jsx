@@ -6,9 +6,9 @@ import classnames from 'classnames';
 import { useTimeBar } from '../../context/TimeBarProvider.jsx';
 import Button from '../simple/Button.jsx';
 import { useModal } from '../../context/ModalProvider.jsx';
+import CategoryEdit from './edit/CategoryEdit.jsx';
 
 const Categories = ({ data, entryId, className }) => {
-  // const categories = useSelector(state => state.categories);
   const { setTimeEntries } = useTimeBar();
   const { showModal } = useModal();
   const scrollableRef = useRef(null);
@@ -29,7 +29,7 @@ const Categories = ({ data, entryId, className }) => {
 
   const handleNewCategories = () => {
     showModal(
-      "Add a category",
+      <CategoryEdit/>,
       "Add a category",
     )
   }

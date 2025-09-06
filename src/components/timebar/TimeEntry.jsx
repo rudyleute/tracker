@@ -8,11 +8,12 @@ import {
 import Categories from './Categories.jsx';
 import { useModal } from '../../context/ModalProvider.jsx'
 import Timer from './Timer.jsx';
-import EntryEdit from './EntryEdit.jsx';
+import EntryEdit from './edit/EntryEdit.jsx';
 import Autocomplete from '../simple/Autocomplete.jsx';
 import Category from './Category.jsx';
+import Option from './Option.jsx';
 import { v4 as uuidv4 } from 'uuid';
-import {useTimeBar} from '../../context/TimeBarProvider.jsx';
+import { useTimeBar } from '../../context/TimeBarProvider.jsx';
 
 const entries = [
   {
@@ -87,7 +88,7 @@ const entries = [
 ]
 
 const TimeEntry = ({ data, onStop, onDelete }) => {
-  const {setTimeEntries} = useTimeBar();
+  const { setTimeEntries } = useTimeBar();
   const [values, setValues] = useState({
     name: "",
     diffSec: null
@@ -145,19 +146,19 @@ const TimeEntry = ({ data, onStop, onDelete }) => {
     if (typeof hideOptions === "function") hideOptions();
   }
 
-  const renderOptions = (values, { hideOptions }) => values.map((elem, index) => {
-    return (
-      <div onPointerDown={(e) => {
-        e.preventDefault();
-        handleOptionSelect(elem, hideOptions);
-      }} key={index} className={"autocomplete-option"}>
-        <span className={"autocomplete-option-name"}>{elem.name}</span>
-        <div className={"categories-list"}>{
-          elem.categories.map(({ id, ...rest }) => <Category className={"category-transparent"} data={rest} key={id}/>)
-        }</div>
-      </div>
+  const renderOptions = (values, { hideOptions }) => values.map((elem) => (
+      <Option
+        key={elem.id}
+        handleOptionSelect={() => handleOptionSelect(elem, hideOptions)}
+        main={elem.name}
+        secondary={
+          <div className={"categories-list"}>
+            {elem.categories.map(({ id, ...rest }) => <Category className={"category-transparent"} data={rest} key={id}/>)}
+          </div>
+        }
+      />
     )
-  })
+  )
 
   return (
     <div className={"time-entry"}>
@@ -176,7 +177,7 @@ const TimeEntry = ({ data, onStop, onDelete }) => {
                         value={values.name}
           />
         </div>
-        <Categories data={data.categories} entryId={data.id} />
+        <Categories data={data.categories} entryId={data.id}/>
       </div>
       <div className={"time-entry-actions"}>
         <Button title={"Stop the timer"} onClick={() => onStop(data.id)} className={"btn-icon btn-circle btn-stop"}>
